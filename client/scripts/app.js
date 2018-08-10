@@ -37,15 +37,18 @@ const app = {
   },
 
   clearMessages: function() {
-    //clear messages from DOM
+    $('#chats').empty();
   },
 
-  renderMessage: function() {
-    //add messages to DOM
+  renderMessage: function(message) {
+    $('#chats').html('<p>' + '<span id="user">' + message.username + '</span>' + ': ' + message.text + '</p>');
+    // $('#chats').html('<p id="someText">' + message.text + '</p>');
   },
-
-  renderRoom: function() {
-    //add rooms to DOM
+  
+  //This is so broken
+  renderRoom: function(roomName) {
+    $('#roomSelect').append('<p>' + roomName + '</p>');
   }
   
+
 };
