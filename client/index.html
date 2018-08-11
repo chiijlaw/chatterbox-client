@@ -3,13 +3,14 @@
   <head>
     <meta charset="utf-8">
     <title>chatterbox</title>
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
     <link rel="stylesheet" href="styles/styles.css">
-
     <!-- dependencies -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script>
       // YOU DO NOT NEED TO EDIT THIS CODE
       if (!/(&|\?)username=/.test(window.location.search)) {
+        debugger;
         var newSearch = window.location.search;
         if (newSearch !== '' & newSearch !== '?') {
           newSearch += '&';
@@ -21,12 +22,24 @@
     <!-- your scripts -->
     <script src="env/config.js"></script>
     <script src="scripts/app.js"></script>
+    <script>
+      $(document).ready(function(){
+        $('body').on('click', 'span.username', function() {
+          app.handleUsernameClick();
+        })
+        
+        $('body').on('click', 'button.submit', function() {
+          app.handleSubmit();
+        })
+      });
+    </script>
   </head>
   <body>
+    <h1>chatterbox</h1>
     <div id="main">
-      <h1>chatterbox</h1>
       <!-- Your HTML goes here! -->
     </div>
+    <button id="send" class="submit">Send message</button>
     <div id="chats"></div>
     <div id="roomSelect">Room:</div>
   </body>

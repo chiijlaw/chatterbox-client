@@ -101,6 +101,7 @@ describe('chatterbox', function() {
       });
 
       it('should be able to add rooms to the DOM', function() {
+
         app.renderRoom('superLobby');
 
         expect($('#roomSelect').children().length).to.equal(1);
@@ -111,7 +112,6 @@ describe('chatterbox', function() {
     describe('events', function() {
       it('should add a friend upon clicking their username', function() {
         sinon.spy(app, 'handleUsernameClick');
-
         app.renderMessage({
           username: 'Mel Brooks',
           text: 'I didn\'t get a harumph outa that guy.!',
@@ -119,7 +119,6 @@ describe('chatterbox', function() {
         });
 
         app.init();
-
         $('#main').find('.username').trigger('click');
         expect(app.handleUsernameClick.called).to.be.true;
 
