@@ -24,24 +24,37 @@
     <script src="env/config.js"></script>
     <script src="scripts/app.js"></script>
     <script>
-      $(document).ready(function(){
+      $(document).ready(function() { 
         $('body').on('click', 'span.username', function() {
-          app.handleUsernameClick();
+          app.handleUsernameClick($(this).text());
+          app.addFriend($(this).text());
         })
         
-        $('body').on('click', 'button.submit', function() {
+        $('body').on('mouseup', 'button.submit', function() {
           app.handleSubmit();
         })
+
+        $("#chats").keypress(function(element) {
+          if (element.which === 13) {
+            app.handleSubmit();
+          }
+        })
+
+        $('#selectRoom').on('change', function () {
+          alert($('#selectRoom').val());
+        })
+
       });
     </script>
   </head>
   <body>
     <h1>chatterbox</h1>
+    <div id="friendList">Friends!</div>
     <div id="main">
       <!-- Your HTML goes here! -->
     </div>
     <button id="send" class="submit">Send message</button>
     <p><input id="chats"></input></p>
-    <div id="roomSelect">Room: <select><option>Lobby</option></select></div>
+    <div id="roomSelect">Room: <select id="selectRoom"><option>Lobby</option></select></div>
   </body>
 </html>

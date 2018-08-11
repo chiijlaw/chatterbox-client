@@ -35,9 +35,14 @@ const app = {
         storeMessages = data;
         app.clearMessages('#main');
         console.log(data);
+        var roomList = {};
         for (let i = 0; i < 100; i++) {
           if (storeMessages.results[i].username !== undefined) {
             app.renderMessage(storeMessages.results[i]);
+            if (!roomList.hasOwnProperty(storeMessages.results[i].roomname)) {
+              roomList[storeMessages.results[i].roomname] = true;
+              app.renderRoom(storeMessages.results[i]);
+            }
           }
         }
       },
@@ -53,18 +58,22 @@ const app = {
   },
 
   renderMessage: function(message) {
-    $('#main').append('<p>' + '<span class="username">' + message.username + '</span>' + ': ' + message.text + '</p>');
-    // $('#chats').html('<p id="someText">' + message.text + '</p>');
+    if (message.roomname === $('#selectRoom').val() || $('#selectRoom').val() === 'Lobby') {
+      $('#main').append(`<p class="${app.sanitize(message.roomname)}">` + `<span class="username ${app.sanitize(message.username)}">` + app.sanitize(message.username) + '</span>' + ': ' + app.sanitize(message.text) + '</p>');
+    }  
   },
   
   //This is so broken
   renderRoom: function(roomName) {
-    $('#roomSelect').append('<p>' + roomName + '</p>');
+    $('#selectRoom').append('<option>' + app.sanitize(roomName.roomname) + '</option>');
   },
 
-  handleUsernameClick: function() {
-    alert('working');
-    return true;
+  handleUsernameClick: function(username) {
+    
+    if (!friendList.hasOwnProperty(username)) {
+      friendList[username] = true;
+      $('#friendList').append('<li class="username">' + username + '</li>');
+    }
   },
 
   handleSubmit: function() {
@@ -75,9 +84,19 @@ const app = {
     };
     app.send(message);
     app.clearMessages('#chats');
+  },
+
+  sanitize: function(html) {
+    return $( $.parseHTML(html)).text();
+  },
+
+  addFriend: function (username) {
+    $(`.${username}`).addClass('friend');
   }
 };
 
+
 app.fetch();
 $('input#chats').val('This is a value');
+var friendList = {};
 // setInterval(app.fetch, 3000);

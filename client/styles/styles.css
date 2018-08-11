@@ -17,6 +17,7 @@ body {
     border-width: 0 1px 1px 1px;
     border-radius: 10px;
     font-family: 'Nunito', sans-serif;
+    overflow: scroll;
 }
 
 #chats {
@@ -114,7 +115,6 @@ form input[type=text] {
 }
 
 .friend {
-    color: #fff;
-    background-color: #0090da;
+    text-decoration: underline;
 }
 
