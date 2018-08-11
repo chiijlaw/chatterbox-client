@@ -1,6 +1,8 @@
 // YOUR CODE HERE:
 const app = {
   init: function() {
+    app.fetch();
+    setInterval(app.fetch, 10000);
     //init stuff
     // $('#main').append('<span class="username">' + message.username + '</span>')
   },
@@ -113,8 +115,7 @@ const app = {
 };
 
 
-app.fetch();
-$('input#chats').val('This is a value');
+// app.fetch();
+app.init();
 var friendList = {};
-setInterval(app.fetch, 10000);
 var roomList = {Lobby: true};
