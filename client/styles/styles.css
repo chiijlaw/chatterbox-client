@@ -5,8 +5,12 @@ body {
     font-family: arial, sans-serif;
 }
 
+ul {
+    list-style: none;
+}
+
 #main {
-    width: 580px;
+    width: 50%;
     margin: auto;
     margin-top: 0px;
     height: 500px;
@@ -17,31 +21,37 @@ body {
     border-width: 0 1px 1px 1px;
     border-radius: 10px;
     font-family: 'Nunito', sans-serif;
-    overflow: scroll;
+    overflow-y: scroll hidden;
+    overflow-x: hidden;
+    display: inline-block;
 }
 
 #chats {
     height: 50px;
     font-size: normal;
-    padding: 10px;
-    width: 600px;
+    padding: 30px;
+    width: 55%;
+    margin-left: 3%;
     height: 50px;
-    vertical-align: text-top;
     border: solid #ddd;
     border-width: 0 1px 1px 1px;
     border-radius: 10px;
     background: rgba(255, 255, 255, 0.9);
     font-family: 'Nunito', sans-serif;
+    display: inline-block;
 }
 
 #send {
     border: none;
     background: rgba(205, 50, 50, 1);
     border-radius: 10px;
-    height: 50px;
+    width: 5;
+    height: 112.5px;
     font-weight: bold;
-    margin: 18px 0px 0px 530px;
+    margin: 25px 10px;
     font-family: 'Nunito', sans-serif;
+    right: 70%;
+    display: inline-block;
 }
 
 /* deleted #main before h1 */
@@ -90,18 +100,9 @@ form input[type=text] {
     padding: 5px;
 }
 
-.chat {
-    padding: 5px;
-    margin-bottom: 5px;
-    background-color: #eee;
-}
-
-.chat .username {
-    font-weight: 800;
-}
-
-.chat:hover {
-    background-color: #ddd;
+p {
+    padding: 0;
+    margin: auto;
 }
 
 .spinner {
@@ -114,7 +115,30 @@ form input[type=text] {
     padding: 10px;
 }
 
-.friend {
-    text-decoration: underline;
+#friendList {
+    width: 10%;
+    margin: 0px;
+    height: 500px;
+    text-align: left;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border: solid #ddd;
+    border-width: 0 1px 1px 1px;
+    border-radius: 10px;
+    font-family: 'Nunito', sans-serif;
+    overflow-y: scroll;
+    overflow-y: hidden;
+    display: inline-block;
 }
 
+.friend {
+    
+    background-color: gold;
+    font-weight: bolder;
+}
+
+#selectRoom {
+    margin: ;
+    position: relative;
+    bottom: 0px;
+}

@@ -20,6 +20,7 @@ const app = {
         console.error('chatterbox: Failed to send message', data);
       }
     });
+    app.fetch();
   },
 
   fetch: function() {
@@ -35,15 +36,20 @@ const app = {
         storeMessages = data;
         app.clearMessages('#main');
         console.log(data);
-        var roomList = {};
         for (let i = 0; i < 100; i++) {
+          //Checks to ensure username is not undefined before rendering message
           if (storeMessages.results[i].username !== undefined) {
             app.renderMessage(storeMessages.results[i]);
+            //Checks all messages for room name to populate select-box
             if (!roomList.hasOwnProperty(storeMessages.results[i].roomname)) {
               roomList[storeMessages.results[i].roomname] = true;
               app.renderRoom(storeMessages.results[i]);
             }
           }
+          //Loop through friend list to highlight friends in fetched messages
+        }
+        for (let prop in friendList) {
+          $('.' + prop).addClass('friend');
         }
       },
       error: function (data) {
@@ -58,8 +64,9 @@ const app = {
   },
 
   renderMessage: function(message) {
+    let cleanName = app.washUsername(message.username);
     if (message.roomname === $('#selectRoom').val() || $('#selectRoom').val() === 'Lobby') {
-      $('#main').append(`<p class="${app.sanitize(message.roomname)}">` + `<span class="username ${app.sanitize(message.username)}">` + app.sanitize(message.username) + '</span>' + ': ' + app.sanitize(message.text) + '</p>');
+      $('#main').append(`<p class="${app.sanitize(message.roomname)}">` + `<span class="username ${cleanName}">` + cleanName + '</span>' + ': ' + app.sanitize(message.text) + '</p>');
     }  
   },
   
@@ -69,18 +76,18 @@ const app = {
   },
 
   handleUsernameClick: function(username) {
-    
-    if (!friendList.hasOwnProperty(username)) {
+    let cleanName = app.washUsername(username);
+    if (!friendList.hasOwnProperty(cleanName)) {
       friendList[username] = true;
-      $('#friendList').append('<li class="username">' + username + '</li>');
+      $('#friendList').append('<li class="username">' + cleanName + '</li>');
     }
   },
 
   handleSubmit: function() {
     let message = {
-      username: 'barbiegirl',
+      username: window.location.search.slice(10),
       text: $('input#chats').val(),
-      roomname: 'lobby'
+      roomname: $('#selectRoom').val()
     };
     app.send(message);
     app.clearMessages('#chats');
@@ -91,7 +98,17 @@ const app = {
   },
 
   addFriend: function (username) {
-    $(`.${username}`).addClass('friend');
+    let cleanUsername = app.washUsername(username);
+    $(`.${cleanUsername}`).addClass('friend');
+  },
+
+  washUsername: function(username) {
+    let nameArray = username.split('');
+    let washedArray = [];
+    nameArray.forEach(function(element) {
+      washedArray.push(element.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, ''));
+    });
+    return washedArray.join('');
   }
 };
 
@@ -99,4 +116,5 @@ const app = {
 app.fetch();
 $('input#chats').val('This is a value');
 var friendList = {};
-// setInterval(app.fetch, 3000);
+setInterval(app.fetch, 10000);
+var roomList = {Lobby: true};
