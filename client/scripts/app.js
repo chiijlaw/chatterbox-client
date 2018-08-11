@@ -27,14 +27,18 @@ const app = {
       // This is the url you should use to communicate with the parse API server.
       url: 'http://parse.sfm8.hackreactor.com/chatterbox/classes/messages',
       type: 'GET',
+      data: 'order=-createdAt',
       contentType: 'application/json',
       success: function (data) {
         console.log('chatterbox: Message sent');
         var storeMessages;
         storeMessages = data;
-        app.clearMessages();
-        for (let i = 2; i < 12; i++) {
-          app.renderMessage(storeMessages.results[i]);
+        app.clearMessages('#main');
+        console.log(data);
+        for (let i = 0; i < 100; i++) {
+          if (storeMessages.results[i].username !== undefined) {
+            app.renderMessage(storeMessages.results[i]);
+          }
         }
       },
       error: function (data) {
@@ -44,8 +48,8 @@ const app = {
     });
   },
 
-  clearMessages: function() {
-    $('#main').empty();
+  clearMessages: function(where) {
+    $(where).empty();
   },
 
   renderMessage: function(message) {
@@ -64,10 +68,16 @@ const app = {
   },
 
   handleSubmit: function() {
-    alert('submit button working');
-    return true;
+    let message = {
+      username: 'barbiegirl',
+      text: $('input#chats').val(),
+      roomname: 'lobby'
+    };
+    app.send(message);
+    app.clearMessages('#chats');
   }
 };
 
 app.fetch();
-setInterval(app.fetch, 5000);
+$('input#chats').val('This is a value');
+// setInterval(app.fetch, 3000);
